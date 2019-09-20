@@ -4,12 +4,15 @@ services:
   service:
     build:
       context: ./
-      dockerfile: ./docker/Dockerfile
+      dockerfile: ./docker/Dockerfile.dev
+    ports:
+      - "4444:3000"
     environment:
+      - PORT=3000
       - RDB_USER=postgres
       - RDB_PASS=pass
       - RDB_HOST=postgres
-      - RDB_NAME=pto
+      - RDB_NAME=cnc
     volumes:
       - ./:/usr/src/app
       - service-node_modules:/usr/src/app/node_modules
