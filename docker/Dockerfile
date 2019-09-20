@@ -7,6 +7,6 @@ FROM node:12.8
 WORKDIR /usr/src/app
 COPY --from=build_npm /usr/src/app/node_modules ./node_modules
 COPY . .
-RUN chmod +x /usr/src/wait-for-it.sh
-RUN chmod +x /usr/src/startup.sh
-CMD ["/usr/src/startup.sh"]
+RUN chmod +x /usr/src/scrcipts/wait-for-it.sh
+RUN chmod +x /usr/src/scripts/startup.sh
+CMD ["/usr/src/scripts/startup.sh"]
