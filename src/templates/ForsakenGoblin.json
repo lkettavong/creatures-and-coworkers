@@ -1,0 +1,69 @@
+{
+	"dungeonName": "Tomb of the Forsaken Goblin",
+	"dungeonDesc": "Find your way through catacombs below the ancient city of Glarven, the final resting place of the forsaken goblins.",
+	"helpText": "Navigate through the catacombs with cardinal directions, collecting ancient treasures along the way.  Commands are go [direction] or get [item].  The treasures you find will be worth gold.  Collect 100 gold and find the exit to escape.",
+	"rooms":[
+		{"roomName": "Entrance Hall",
+			"roomDesc": "You find yourself inside a large, musty room, unable to recall how you got here.  You appear to be underground, though you are not sure how far down.  There is a small torch on the far side of the room that barely provides sufficient illumination.",
+			"north": "Tomb of Mikki the Gobbo",
+			"south": "",
+			"east": "Goblin Cloak Room",
+			"west": "",
+			"up": "",
+			"down": "",
+			"items": [
+				{"itemName": "The Tome Of Lowrasil",
+				"itemDesc": "A giant book written in an unfamiliar language.",
+				"itemValue": "10",
+				"itemProperty": ""
+				}]
+		},
+		{"roomName": "Goblin Cloak Room",
+			"roomDesc": "You enter a small room lined on two sides with open closets full of empty hangers.  There is a drab brown cloak hanging all alone on a hanger in the middle of one closet.",
+			"north": "",
+			"south": "",
+			"east": "Tomb of the Unknown Goblin",
+			"west": "Entrance Hall",
+			"up": "",
+			"down": "",
+			"items": []
+		},
+		{"roomName": "Tomb of the Unknown Goblin",
+			"roomDesc": "This room appears to be a small tomb, though there are no names or markings to be seen anywhere.",
+			"north": "Hall of Cursed Mirrors",
+			"south": "",
+			"east": "",
+			"west": "Goblin Cloak Room",
+			"up": "",
+			"down": "",
+			"items": [
+				{"itemName": "Gem of Sorrows",
+				"itemDesc": "A tiny, blue gemstone that sparkles with fire, casting a troubling blue glow out into the room.",
+				"itemValue": "25",
+				"itemProperty": ""
+				},
+				{"itemName": "Mordua's Crown",
+				"itemDesc": "A silver crown fashioned of delicate vines and leaves.  The legends say that Mordua's dying words were a spell that enchanted this crown to bring its owner luck.",
+				"itemValue": "35",
+				"itemProperty": ""
+				}
+			]
+		},
+		{"roomName": "Room of Halgar's Last Breath",
+			"roomDesc": "You enter a room whose only remarkable feature is that it seems to be squeezing the very air from your lungs.",
+			"north": "Anarius the Grand's Crypt",
+			"south": "",
+			"east": "Tomb of Mikki the Gobbo",
+			"west": "",
+			"up": "",
+			"down": "",
+			"items": [
+				{"itemName": "The Tome Of Lowrasil",
+				"itemDesc": "A giant book written in an unfamiliar language.",
+				"itemValue": "10",
+				"itemProperty": ""
+				}
+			]
+		}
+	]
+}
