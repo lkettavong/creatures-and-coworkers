@@ -1,0 +1,29 @@
+version: "3.7"
+
+services:
+  service:
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+    environment:
+      - RDB_USER=postgres
+      - RDB_PASS=pass
+      - RDB_HOST=postgres
+      - RDB_NAME=pto
+    volumes:
+      - ./:/usr/src/app
+      - service-node_modules:/usr/src/app/node_modules
+  postgres:
+    image: postgres:11.5-alpine
+    restart: always
+    ports:
+      - "5400:5432"
+    environment:
+      - POSTGRES_PASSWORD=pass
+      - POSTGRES_DB=cnc
+    volumes:
+      - pg-data:/var/lib/postgresql/data
+
+volumes:
+  service-node_modules:
+  pg-data:
