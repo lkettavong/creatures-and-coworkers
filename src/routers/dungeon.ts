@@ -1,7 +1,10 @@
 import Router from 'koa-router';
 import ForsakeGoblinTemplate from '../templates/ForsakenGoblin.json';
+const ForsakeGoblinDungeon = DungeonState(ForsakeGoblinTemplate);
+
 import { reduceState } from '../stateReconstructor';
 import { Move, PickUp, Stab } from '../stateReconstructor/events';
+import { DungeonState } from '../stateReconstructor/dungeonState.js';
 const router = new Router();
 router.prefix('/dungeon');
 
@@ -12,7 +15,7 @@ router.get('/', async ctx => {
 });
 
 router.get('/move/:direction', async ctx => {
-  ctx.body = reduceState(ForsakeGoblinTemplate)(Move({
+  ctx.body = reduceState(ForsakeGoblinDungeon)(Move({
     playerId: 1, direction: ctx.params.direction
   }));
 });
