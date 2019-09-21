@@ -15,6 +15,13 @@ router.get('/', async ctx => {
 });
 
 router.get('/move/:direction', async ctx => {
+  //Create Move event
+  //in order:
+  // - pull event logs, run reduceState across them
+  // - call effector with that state + Move event to get array of effects
+  // - do those effects
+  // - save Move to events table
+
   ctx.body = reduceState(ForsakeGoblinDungeon)(Move({
     playerId: 1, direction: ctx.params.direction
   }));
