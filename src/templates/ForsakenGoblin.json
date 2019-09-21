@@ -59,7 +59,7 @@
 			"down": "",
 			"items": [
 				{"itemName": "The Orb of Silence",
-				"itemDesc": "A shiny glass orb no bigger than a child's fist.  Whoever posesses this orb is unable to speak.",
+				"itemDesc": "A shiny glass orb no bigger than a child's fist.  Whoever possesses this orb is unable to speak.",
 				"itemValue": "9",
 				"itemProperty": ""
 				}
@@ -75,7 +75,7 @@
 			"down": "",
 			"items": []
 		},
-		{"roomName": "Hall of Cursed Mirrors",
+		{"roomName": "The Hall of Cursed Mirrors",
 			"roomDesc": "A brightly lit hallway with shattered mirrors lining the sides.  The lore of Glarven says that thieves shattered these mirrors while trying to escape from a banshee and their souls were cursed to remain in the shards for eternity.  Anyone who spies one of the thieves within is at risk of swapping places with them.",
 			"north": "The Pit of Eternal Moaning",
 			"south": "The Tomb of the Unknown Goblin",
@@ -151,7 +151,7 @@
 				}]
 		},
 		{"roomName": "Wooden Hollow",
-			"roomDesc": "You enter a place so thick with tree roots that you can barely get through.  When you manage to find a path you see that it is a room made of garled root walls and floors, and a low ceiling of still more roots.",
+			"roomDesc": "You enter a place so thick with tree roots that you can barely get through.  When you manage to find a path you see that it is a room made of gnarled root walls and floors, and a low ceiling of still more roots.",
 			"north": "The Restless Tomb",
 			"south": "The Forbidden Lake",
 			"east": "Abandoned Glory Mausoleum",
@@ -270,7 +270,7 @@
 			"up": "",
 			"down": "",
 			"items": [
-				{"itemName": "Elixir of Transcendance",
+				{"itemName": "Elixir of Transcendence",
 				"itemDesc": "A small vial of a pale green translucent fluid.",
 				"itemValue": "72",
 				"itemProperty": ""
