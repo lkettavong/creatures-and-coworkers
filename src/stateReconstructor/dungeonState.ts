@@ -58,8 +58,8 @@ export const DungeonState = (jsonObj: any): DungeonState => ({
   })),
   players: [{
     id: 1,
-    gold: 100,
-    room: 'Entrance Hall',
+    gold: 0,
+    room: 'The Entrance Hall',
     inventory: []
   }],
   deadPlayers: []
