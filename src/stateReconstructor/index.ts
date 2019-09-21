@@ -28,7 +28,7 @@ const roomLens = (roomName: string): R.Lens => L.compose(
   L.find(R.whereEq({roomName}))
 );
 
-const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonState>({
+export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonState>({
   'move': ({direction, playerId}: {direction: Direction, playerId: number}) => {
     const currentRoom: string = L.get(playerRoom(playerId), state);
     const nextRoom: Room = L.get(roomLens(currentRoom), state);
