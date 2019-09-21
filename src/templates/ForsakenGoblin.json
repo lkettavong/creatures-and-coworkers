@@ -28,7 +28,7 @@
 			"down": "",
 			"items": []
 		},
-		{"roomName": "Tomb of the Unknown Goblin",
+		{"roomName": "The Tomb of the Unknown Goblin",
 			"roomDesc": "This room appears to be a small tomb, though there are no names or markings to be seen anywhere.",
 			"north": "The Hall of Cursed Mirrors",
 			"south": "",
