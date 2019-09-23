@@ -2,35 +2,36 @@ import * as R from 'ramda';
 const L = require('partial.lenses');
 
 import { match } from "./unionHelpers";
-import { Direction, DungeonState, Room } from "./dungeonState";
+import { Direction, DungeonState, Room, Player } from "./dungeonState";
 import { DungeonEvent, Move, DropInToDungeon } from './events';
 
 import testDungeonJson from './testDungeon.json';
 const testDungeon = DungeonState(testDungeonJson);
 
 export const lenses = {
-  player: (playerId: number): R.Lens => L.compose(
-    L.prop('players'),
+  player: (playerId: string): R.Lens => L.compose(
+    lenses.players(),
     L.find(R.whereEq({id: playerId}))
   ),
   room: (roomName: string): R.Lens => L.compose(
     L.prop('rooms'),
     L.find(R.whereEq({roomName}))
   ),
+  players: (): R.Lens => L.prop('players'),
   deadPlayers: (): R.Lens => L.prop('deadPlayers'),
   firstRoom: (): R.Lens => L.compose(
     L.prop('rooms'),
     L.first
   ),
-  playerRoom: (playerId: number): R.Lens => L.compose(
+  playerRoom: (playerId: string): R.Lens => L.compose(
     lenses.player(playerId),
     L.prop('room')
   ),
-  playerInventory: (playerId: number): R.Lens => L.compose(
+  playerInventory: (playerId: string): R.Lens => L.compose(
     lenses.player(playerId),
     L.prop('inventory')
   ),
-  playerGold: (playerId: number): R.Lens => L.compose(
+  playerGold: (playerId: string): R.Lens => L.compose(
     lenses.player(playerId),
     L.prop('gold')
   )
@@ -52,7 +53,7 @@ const mergeStates = (...transforms: DungeonTransformer[]) => (state: DungeonStat
 );
 
 export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonState>({
-  'move': ({direction, playerId}: {direction: Direction, playerId: number}) => {
+  'move': ({direction, playerId}) => {
     const currentRoomName: string = L.get(lenses.playerRoom(playerId), state);
     const currentRoom: Room = L.get(lenses.room(currentRoomName), state);
 
@@ -78,7 +79,7 @@ export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonS
   },
   'stab': ({playerId}) => {
     return L.modify(
-      lenses.deadPlayers,
+      lenses.deadPlayers(),
       (deadPlayers: number[]) => [...deadPlayers, playerId],
       state
     )
@@ -89,11 +90,16 @@ export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonS
       state
     );
 
-    return mergeStates(
-      L.set(lenses.playerRoom(playerId)     , startingRoom),
-      L.set(lenses.playerInventory(playerId), []),
-      L.set(lenses.playerGold(playerId)     , 0)
-    )(state);
+    return L.modify(
+      lenses.players(),
+      (players: Player[]) => [...players, {
+        id: playerId,
+        gold: 0,
+        room: startingRoom.roomName,
+        inventory: []
+      }],
+      state
+    );
   }
 });
 
@@ -102,5 +108,5 @@ export const go = () => {
   console.log(testDungeon);
 
   console.log('testing lens');
-  console.log(JSON.stringify(reduceState(testDungeon)(DropInToDungeon({playerId: 1, dungeonId: 'the-dungeon'})), null, 4));
+  console.log(JSON.stringify(reduceState(testDungeon)(DropInToDungeon({playerId: '1', dungeonId: 'the-dungeon'})), null, 4));
 };

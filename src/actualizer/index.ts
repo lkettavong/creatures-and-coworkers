@@ -14,5 +14,10 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
   },
   'alert': ({text, toPlayerId}) => {
     // Send a slack message to player(toPlayerId) saying `text`
+  },
+  'slack-response': ({response}) => {
+    ctx.type = 'application/json';
+
+    ctx.body = response;
   }
 });
