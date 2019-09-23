@@ -7,7 +7,7 @@ export const makeFactory = <T extends UnionType>(kind: T['kind']) => (init: Part
 } as T);
 
 export type CommonEvent = {
-  playerId: number;
+  playerId: string;
 };
 
 export type Move = {

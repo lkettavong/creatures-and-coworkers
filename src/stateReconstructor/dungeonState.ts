@@ -1,5 +1,5 @@
 export interface Player {
-  id: number;
+  id: string;
   gold: number;
   room: string;
   inventory: string[]
@@ -57,7 +57,7 @@ export const DungeonState = (jsonObj: any): DungeonState => ({
     }))
   })),
   players: [{
-    id: 1,
+    id: '1',
     gold: 0,
     room: 'The Entrance Hall',
     inventory: []
