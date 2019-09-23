@@ -16,7 +16,7 @@ router.prefix('/dungeon');
 let forsakenGoblinTemple = DungeonState(ForsakeGoblinTemplate);
 
 const look = async (ctx: Context) => {
-  const playerId = ctx.request.body.user_id;
+  const playerId: string = ctx.request.body.user_id || '1';
 
   const roomName = L.get(lenses.playerRoom(playerId), forsakenGoblinTemple);
   const room     = L.get(lenses.room(roomName), forsakenGoblinTemple);
@@ -33,7 +33,7 @@ const move = async (ctx: Context) => {
   // - call effector with that state + Move event to get array of effects
   // - do those effects
   // - save Move to events table
-  const playerId = ctx.request.body.user_id;
+  const playerId: string = ctx.request.body.user_id || '1';
 
   if (!L.get(lenses.player(playerId), forsakenGoblinTemple)) {
     // TODO Get rid of me.
