@@ -8,7 +8,7 @@ import { DungeonEvent, Move, DropInToDungeon } from './events';
 import testDungeonJson from './testDungeon.json';
 const testDungeon = DungeonState(testDungeonJson);
 
-const lenses = {
+export const lenses = {
   player: (playerId: number): R.Lens => L.compose(
     L.prop('players'),
     L.find(R.whereEq({id: playerId}))
@@ -53,9 +53,15 @@ const mergeStates = (...transforms: DungeonTransformer[]) => (state: DungeonStat
 
 export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonState>({
   'move': ({direction, playerId}: {direction: Direction, playerId: number}) => {
-    const currentRoom: string = L.get(lenses.playerRoom(playerId), state);
-    const nextRoom: Room = L.get(lenses.room(currentRoom), state);
-    const nextRoomName = nextRoom[direction];
+    const currentRoomName: string = L.get(lenses.playerRoom(playerId), state);
+    const currentRoom: Room = L.get(lenses.room(currentRoomName), state);
+
+    const nextRoomName = currentRoom[direction];
+    const nextRoom: Room = L.get(lenses.room(nextRoomName), state);
+
+    if (!nextRoom) {
+      return state;
+    }
 
     return L.set(
       lenses.playerRoom(playerId),
@@ -94,8 +100,6 @@ export const reduceState = (state: DungeonState) => match<DungeonEvent, DungeonS
 
 export const go = () => {
   console.log(testDungeon);
-
-  // console.log(L.get(playerLens, testDungeon));
 
   console.log('testing lens');
   console.log(JSON.stringify(reduceState(testDungeon)(DropInToDungeon({playerId: 1, dungeonId: 'the-dungeon'})), null, 4));
