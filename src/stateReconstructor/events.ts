@@ -30,4 +30,11 @@ export type Stab = {
 
 export const Stab = makeFactory<Stab>('stab');
 
-export type DungeonEvent = Move | PickUp | Stab;
+export type DropInToDungeon = {
+  kind: 'drop-in';
+  dungeonId: string;
+} & CommonEvent;
+
+export const DropInToDungeon = makeFactory<DropInToDungeon>('drop-in');
+
+export type DungeonEvent = Move | PickUp | Stab | DropInToDungeon;
