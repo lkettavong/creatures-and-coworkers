@@ -1,6 +1,7 @@
 import * as R from 'ramda';
 const L = require('partial.lenses');
 
+import { roomBlocks } from "./slackResponse";
 import { match } from "../stateReconstructor/unionHelpers";
 import { Direction, DungeonState, Room } from "../stateReconstructor/dungeonState";
 import { DungeonEvent, Move, makeFactory } from '../stateReconstructor/events';
@@ -17,13 +18,19 @@ export type Alert = {
   toPlayerId: number;
 }
 
-export type Effect = StringResponse | Alert;
+export type SlackResponse = {
+  kind: 'slack-response';
+  response: string;
+};
+
+export type Effect = StringResponse | Alert | SlackResponse;
 
 export const StringResponse = makeFactory<StringResponse>('string-response');
-export const Alert = makeFactory<Alert>('alert');
+export const Alert          = makeFactory<Alert>('alert');
+export const SlackResponse  = makeFactory<SlackResponse>('slack-response');
 
 export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect[]>({
-  'move': ({direction, playerId}: {direction: Direction, playerId: number}) => {
+  'move': ({direction, playerId}) => {
     const currentRoomName: string = L.get(lenses.playerRoom(playerId), state);
     const currentRoom: Room = L.get(lenses.room(currentRoomName), state);
 
@@ -34,7 +41,9 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
       return [StringResponse({response: "You can't do that. "})];
     }
 
-    return [StringResponse({response: nextRoom.roomName + '\n\n' + nextRoom.roomDesc})];
+    return [SlackResponse({
+      response: JSON.stringify(roomBlocks(nextRoom.roomName, nextRoom.roomDesc))
+    })];
   },
   'pick-up': ({itemId, playerId}) => {
     return [StringResponse({response: 'cool shit bro'})];
