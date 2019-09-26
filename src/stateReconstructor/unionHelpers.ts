@@ -6,10 +6,6 @@ export type UnionMatchObj<U extends UnionType, Ret> = {
   [K in U['kind']]: (unionMember: UnionMemberByKind<U, K>) => Ret
 };
 
-export type Merge<M extends {}, N extends {}> = {
-  [P in Exclude<keyof M, keyof N>]: M[P]
-} & N;
-
 export const match = <U extends UnionType, RetT>(
   fObj: UnionMatchObj<U, RetT>
 ) => (
@@ -17,3 +13,8 @@ export const match = <U extends UnionType, RetT>(
 ) => (
   fObj[unionVal.kind as U['kind']](unionVal as any)
 );
+
+export const makeFactory = <T extends UnionType>(kind: T['kind']) => (init: Partial<T>): T => ({
+  ...init,
+  kind
+} as T);
