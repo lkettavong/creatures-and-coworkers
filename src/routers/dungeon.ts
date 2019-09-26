@@ -1,14 +1,14 @@
 import Router from 'koa-router';
-const L = require('partial.lenses');
+import * as R from 'ramda';
 
 import ForsakeGoblinTemplate from '../templates/ForsakenGoblin.json';
-import { reduceState, lenses } from '../stateReconstructor';
+import { reduceState } from '../stateReconstructor';
 import { Move, PickUp, Stab, DropInToDungeon } from '../stateReconstructor/events';
 import { DungeonState } from '../stateReconstructor/dungeonState';
 import { EventEffector } from '../effector';
 import { EventActualizer } from '../actualizer';
 import { Context } from 'koa';
-import lens from 'ramda/es/lens';
+import { lenses } from '../stateReconstructor/lenses';
 
 const router = new Router();
 router.prefix('/dungeon');
@@ -18,8 +18,8 @@ let forsakenGoblinTemple = DungeonState(ForsakeGoblinTemplate);
 const look = async (ctx: Context) => {
   const playerId: string = ctx.request.body.user_id || '1';
 
-  const roomName = L.get(lenses.playerRoom(playerId), forsakenGoblinTemple);
-  const room     = L.get(lenses.room(roomName), forsakenGoblinTemple);
+  const roomName = R.view(lenses.playerRoom(playerId), forsakenGoblinTemple);
+  const room     = R.view(lenses.room(roomName), forsakenGoblinTemple);
 
   ctx.body = !!room
     ? room
@@ -35,12 +35,9 @@ const move = async (ctx: Context) => {
   // - save Move to events table
   const playerId: string = ctx.request.body.user_id || '1';
 
-  if (!L.get(lenses.player(playerId), forsakenGoblinTemple)) {
-    // TODO Get rid of me.
-    forsakenGoblinTemple = reduceState(forsakenGoblinTemple)(
-      DropInToDungeon({playerId})
-    );
-  }
+  forsakenGoblinTemple = reduceState(forsakenGoblinTemple)(
+    DropInToDungeon({playerId})
+  );
 
   const moveEvt = Move({
     playerId, direction: ctx.params.direction

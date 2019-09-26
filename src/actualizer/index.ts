@@ -1,5 +1,4 @@
 import * as R from 'ramda';
-const L = require('partial.lenses');
 
 import { match } from "../stateReconstructor/unionHelpers";
 import { DungeonState } from "../stateReconstructor/dungeonState";

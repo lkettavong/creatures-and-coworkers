@@ -1,11 +1,10 @@
 import * as R from 'ramda';
-const L = require('partial.lenses');
 
 import { roomBlocks } from "./slackResponse";
-import { match } from "../stateReconstructor/unionHelpers";
+import { match, makeFactory } from "../stateReconstructor/unionHelpers";
 import { Direction, DungeonState, Room } from "../stateReconstructor/dungeonState";
-import { DungeonEvent, Move, makeFactory } from '../stateReconstructor/events';
-import { lenses } from '../stateReconstructor';
+import { DungeonEvent, Move } from '../stateReconstructor/events';
+import { lenses } from '../stateReconstructor/lenses';
 
 export type StringResponse = {
   kind: 'string-response';
@@ -31,11 +30,11 @@ export const SlackResponse  = makeFactory<SlackResponse>('slack-response');
 
 export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect[]>({
   'move': ({direction, playerId}) => {
-    const currentRoomName: string = L.get(lenses.playerRoom(playerId), state);
-    const currentRoom: Room = L.get(lenses.room(currentRoomName), state);
+    const currentRoomName: string = R.view(lenses.playerRoom(playerId), state);
+    const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
 
     const nextRoomName = currentRoom[direction];
-    const nextRoom: Room = L.get(lenses.room(nextRoomName), state);
+    const nextRoom: Room = R.view(lenses.room(nextRoomName), state);
 
     if (!nextRoom) {
       return [StringResponse({response: "You can't do that. "})];
@@ -54,7 +53,7 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
     return [Alert({text: 'you done dead', toPlayerId})];
   },
   'drop-in': ({playerId}) => {
-    const playerRoom: Room = L.get(lenses.playerRoom(playerId), state);
+    const playerRoom: Room = R.view(lenses.playerRoom(playerId), state);
 
     return [StringResponse({response: playerRoom.roomDesc})];
   }
