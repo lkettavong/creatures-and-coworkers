@@ -13,7 +13,7 @@ export type Event = Record<
   | 'created_at'
 , string>;
 
-export const gatherEvents = async (db: Knex) => {
+export const gatherEvents = async (db: Knex, dungeon_id: string) => {
   const res = await db<Event>('events')
     .leftJoin<EventDetails>('event_details', 'events.id', 'event_details.event_id')
     .select({
@@ -23,6 +23,7 @@ export const gatherEvents = async (db: Knex) => {
       name: 'name',
       value: 'value'
     })
+    .where({dungeon_id})
     .orderBy('events.created_at', 'asc');
 
   const gatherEventJoin = gatherJoin<DungeonEvent, typeof res[0]>(
