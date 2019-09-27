@@ -1,30 +1,33 @@
 {
-	"dungeonName": "Tower of Testing",
-	"dungeonDesc": "Behold, this is thine tower for with which to test.",
-	"helpText": "You need more help than I can provide.",
-	"rooms":[
-		{"roomName": "Room 1",
-		"roomDesc": "You enter a boring room.",
-		"north": "EXIT",
-		"south": "",
-		"east": "",
-		"west": "",
-		"up": "",
-		"down": "",
-		"items": [
-			{"itemName": "Steve",
-			"itemDesc": "Your friend named Steve.  Thankfully he fits in your satchel.",
-			"itemValue": "100",
-			"itemProperty": ""
-		},
-		{"roomName": "EXIT",
-		"roomDesc": "Th-th-th-that's all folks.",
-		"north": "",
-		"south": "",
-		"east": "",
-		"west": "",
-		"up": "",
-		"down": "",
-		"items": []
-	}]
+  "dungeonName": "Tower of Testing",
+  "dungeonDesc": "Behold, this is thine tower for with which to test.",
+  "helpText": "You need more help than I can provide.",
+  "rooms": [{
+      "roomName": "Room 1",
+      "roomDesc": "You enter a boring room.",
+      "north": "EXIT",
+      "south": "",
+      "east": "",
+      "west": "",
+      "up": "",
+      "down": "",
+      "items": [{
+        "itemName": "Steve",
+        "itemDesc": "Your friend named Steve.  Thankfully he fits in your satchel.",
+        "itemValue": "100",
+        "itemProperty": ""
+      }]
+    },
+    {
+      "roomName": "EXIT",
+      "roomDesc": "Th-th-th-that's all folks.",
+      "north": "",
+      "south": "",
+      "east": "",
+      "west": "",
+      "up": "",
+      "down": "",
+      "items": []
+    }
+  ]
 }
