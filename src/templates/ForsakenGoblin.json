@@ -86,7 +86,7 @@
 			"items": []
 		},
 		{"roomName": "Anarius the Grand's Crypt",
-			"roomDesc": "You enter a grand room with a floor that slopes gently toward the center of the western wall.  Against the wall stands a foreboding statue bearing a strange resemblance to your mother.  Behind the statue is a large marble cube with a plaque that reads 'Anarius the Grand'.",
+			"roomDesc": "You enter a grand room with a floor that slopes gently toward the center of the western wall.  Against the wall stands a foreboding statue bearing a strange resemblance to your mother.  Beneath the statue is a plaque that reads 'Anarius the Grand'.",
 			"north": "The Cavern of the Forest",
 			"south": "The Room of Halgar's Last Breath",
 			"east": "The Forbidden Lake",
