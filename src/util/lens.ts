@@ -4,6 +4,7 @@ export const lensFind = <T>(pred: (_: T) => boolean): R.Lens => R.lens<T[], T, T
   R.find(pred),
   (toSetWith: T, arr) => {
     const idx = R.findIndex(pred)(arr);
+
     return R.set(R.lensIndex(idx), toSetWith, arr);
   }
 );

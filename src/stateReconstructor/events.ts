@@ -1,10 +1,5 @@
-import { UnionType } from "./unionHelpers";
+import { UnionType, makeFactory } from "./unionHelpers";
 import { Direction } from "./dungeonState";
-
-export const makeFactory = <T extends UnionType>(kind: T['kind']) => (init: Partial<T>): T => ({
-  ...init,
-  kind
-} as T);
 
 export type CommonEvent = {
   playerId: string;
