@@ -15,7 +15,7 @@ const configs: EnvConfigs = {
       database: process.env.RDB_NAME
     },
     migrations: {
-      directory: path.join(__dirname, 'src', 'migrations')
+      directory: path.join(__dirname, 'src', 'db', 'migrations')
     }
   }
 };
