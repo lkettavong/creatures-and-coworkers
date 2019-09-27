@@ -15,6 +15,7 @@ import { match } from '../stateReconstructor/unionHelpers';
 import { gatherEvents, saveEvents, Event } from '../db/events';
 import { Dungeon } from '../db/dungeons.js';
 import { User } from '../db/users.js';
+import { Template } from '../db/templates.js';
 
 const router = new Router();
 router.prefix('/dungeon');
@@ -81,21 +82,54 @@ const withCurrentDungeon =
     async (ctx) => {
       const db = ctx.db as Knex;
 
-      const [currentDungeon] = await db<Dungeon>('dungeons')
+      let [currentDungeon] = await db<Dungeon>('dungeons')
         .select('*')
         .where('is_active', true);
+
+      if (!currentDungeon) {
+        const display_name = ctx.request.body.user_name || "Bobby Digital";
+
+        const allTemplates = await db<Template>('templates')
+          .select('*');
+
+        const template = allTemplates[
+          Math.floor(Math.random() * allTemplates.length)
+        ];
+
+        currentDungeon = (
+          await db<Dungeon>('dungeons')
+            .insert({
+              is_active: true,
+              template_id: template.id
+            })
+            .returning('*')
+        )[0];
+      }
 
       return handler(currentDungeon)(ctx);
     };
 
-const withRebuiltState = (playerId: string) =>
+//TODO join me with withCurrentDungeon
+const withCurrentDungeonTemplate = (currentDungeon: Dungeon) =>
+  (handler: (template: Template) => HandlerF): HandlerF =>
+    async (ctx) => {
+      const db = ctx.db as Knex;
+
+      let [currentTemplate] = await db<Template>('templates')
+        .select('*')
+        .where('id', currentDungeon.template_id);
+
+      return handler(currentTemplate)(ctx);
+    };
+
+const withRebuiltState = (playerId: string, currentDungeon: Dungeon, currentTemplate: Template) =>
   (handler: (state: DungeonState) => HandlerF): HandlerF =>
     async (ctx) => {
       const db = ctx.db as Knex;
 
-      const events = await gatherEvents(db);
+      const events = await gatherEvents(db, currentDungeon.id);
 
-      const currentDungeonState = rebuildStateFrom(forsakenGoblinTemple)(
+      const currentDungeonState = rebuildStateFrom(DungeonState(currentTemplate.model))(
         events
       );
 
@@ -105,23 +139,25 @@ const withRebuiltState = (playerId: string) =>
 /* ///////////////////////////////////////////////////////////////////////// */
 
 const look =
-  withUser(                                   user =>
-  withCurrentDungeon(                         currentDungeon =>
+  withUser(                                           user =>
+  withCurrentDungeon(                                 currentDungeon =>
+  withCurrentDungeonTemplate(currentDungeon)(         template =>
   withAutoParticipation(user, currentDungeon)(
-  withRebuiltState(user.id)(                  currentDungeonState =>
+  withRebuiltState(user.id, currentDungeon, template)(currentDungeonState =>
     async (ctx) => {
       const roomName = R.view(lenses.playerRoom(user.id), currentDungeonState);
       const room     = R.view(lenses.room(roomName), currentDungeonState);
 
       ctx.body = room;
     }
-  ))));
+  )))));
 
 const move =
-  withUser(                                   user =>
-  withCurrentDungeon(                         currentDungeon =>
+  withUser(                                           user =>
+  withCurrentDungeon(                                 currentDungeon =>
+  withCurrentDungeonTemplate(currentDungeon)(         template =>
   withAutoParticipation(user, currentDungeon)(
-  withRebuiltState(user.id)(                  currentDungeonState =>
+  withRebuiltState(user.id, currentDungeon, template)(currentDungeonState =>
     async (ctx) => {
       const db = ctx.db as Knex;
 
@@ -141,7 +177,7 @@ const move =
         getEffects(moveEvt).map(actualize)
       );
     }
-  ))));
+  )))));
 
 router.get('/', async ctx => {
   ctx.body = forsakenGoblinTemple;
