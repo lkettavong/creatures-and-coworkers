@@ -109,8 +109,8 @@ export const rebuildStateFrom = (initState: DungeonState) => (events: DungeonEve
 );
 
 const logCall = <T extends Function>(f: T) => (...args: unknown[]) => {
-  console.log('Function call arguments: ', args);
+  //console.log('Function call arguments: ', args);
   const res = f(...args);
-  console.log('Function call result: ', res);
+  //console.log('Function call result: ', res);
   return res;
 }
