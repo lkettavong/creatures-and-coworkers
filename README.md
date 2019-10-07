@@ -1,11 +1,11 @@
 # hackathon-team-c
 
 Team Members:
-Megan Barton
-Shawn Carr
-Lae Kettavong
-Travis Stodter
-Matt Thomson
+- Megan Barton
+- Shawn Carr
+- Lae Kettavong
+- Travis Stodter
+- Matt Thomson
 
 Project: Multi User Dungeon
 
