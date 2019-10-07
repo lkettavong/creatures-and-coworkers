@@ -13,8 +13,7 @@ import Knex from 'knex';
 import { match } from '../stateReconstructor/unionHelpers';
 import { gatherEvents, saveEvents, Event } from '../db/events';
 import {
-  user as userMiddleware,
-  dungeon as dungeonMiddleware
+  establishStateMiddlewares
 } from '../middleware';
 import { namespace } from '../middleware/util';
 
@@ -58,39 +57,11 @@ router.get('/', async ctx => {
   ctx.body = forsakenGoblinTemple;
 });
 
-router.get('/look',
-  userMiddleware.withUser,
-  dungeonMiddleware.withCurrentDungeon,
-  dungeonMiddleware.withCurrentDungeonTemplate,
-  dungeonMiddleware.withAutoParticipation,
-  dungeonMiddleware.withRebuiltState,
-  look
-);
-router.post('/look', 
-  userMiddleware.withUser,
-  dungeonMiddleware.withCurrentDungeon,
-  dungeonMiddleware.withCurrentDungeonTemplate,
-  dungeonMiddleware.withAutoParticipation,
-  dungeonMiddleware.withRebuiltState,
-  look
-);
+router.get('/look', ...establishStateMiddlewares, look);
+router.post('/look', ...establishStateMiddlewares, look);
 
-router.post('/move/:direction', 
-  userMiddleware.withUser,
-  dungeonMiddleware.withCurrentDungeon,
-  dungeonMiddleware.withCurrentDungeonTemplate,
-  dungeonMiddleware.withAutoParticipation,
-  dungeonMiddleware.withRebuiltState,
-  move
-);
-router.get('/move/:direction', 
-  userMiddleware.withUser,
-  dungeonMiddleware.withCurrentDungeon,
-  dungeonMiddleware.withCurrentDungeonTemplate,
-  dungeonMiddleware.withAutoParticipation,
-  dungeonMiddleware.withRebuiltState,
-  move
-);
+router.post('/move/:direction', ...establishStateMiddlewares, move);
+router.get('/move/:direction', ...establishStateMiddlewares, move);
 
 export default router;
 
