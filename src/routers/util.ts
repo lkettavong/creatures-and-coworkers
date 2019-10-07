@@ -1,2 +1,2 @@
 // ¯\_(ツ)_/¯
-export type Next = () => Promise<any>;
+export type Next = () => Promise<unknown>;
