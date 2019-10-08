@@ -17,6 +17,26 @@ import {
 } from '../middleware';
 import { namespace } from '../middleware/util';
 
+//**** Slack integration - standalone mode ********************/
+import rp from 'request-promise';
+require('dotenv').config();
+import { SlackPublisher } from '../integration/slack/broadcaster';
+import { SlackSubscriber } from '../integration/slack/responder';
+import { handleRequest } from '../integration/slack/context';
+import { DungeonMaster } from '../integration/slack/master';
+import * as forsakenGoblin from '../integration/slack/dungeon.json';
+
+import {
+  Item,
+  Player,
+  Room
+} from './../integration/slack/model';
+
+const slackPublisher = new SlackPublisher();
+slackPublisher.add(new SlackSubscriber(rp));
+const mudGame = DungeonMaster.getInstance(forsakenGoblin);
+//*************************************************************/
+
 const router = new Router();
 router.prefix('/dungeon');
 
@@ -63,6 +83,24 @@ router.post('/look', ...establishStateMiddlewares, look);
 router.post('/move/:direction', ...establishStateMiddlewares, move);
 router.get('/move/:direction', ...establishStateMiddlewares, move);
 
+//**** Slack integration - standalone mode ********************/
+router.get('/bot/:id', async (ctx: Context) => {
+    // test: build game context for player
+    const player: Player = mudGame.findOrAddPlayer(ctx.params.id);
+    const room: Room = mudGame.getRoomById("chamber-4pvk1dtqyk6");
+    const item1: Item = mudGame.getItemById("gold-4wtk1dtw2n8");
+    const item2: Item = mudGame.getItemById("gold-4wtk1dtw2n9");
+    mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item1.getId() });
+    mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item2.getId() });
+    ctx.body = mudGame.getGameContext(ctx.params.id)
+});
+
+// POC - Slack standalone mode...not integrated with rest of repo
+router.post('/bot', async (ctx, next) => {
+  ctx.status = 200; 
+  ctx.body = '';
+  slackPublisher.notify(handleRequest(ctx, mudGame));
+});
+//*************************************************************/
+
 export default router;
-
-
