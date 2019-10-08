@@ -1,0 +1,392 @@
+{
+    "dungeonId": "dungeon-4blk1dtg6bw",
+    "dungeonName": "Tomb of the Forsaken Goblin",
+    "dungeonDesc": "Find your way through catacombs below the ancient city of Glarven, the final resting place of the forsaken goblins.",
+    "dungeonImg": "https://cdn.conceptartempire.com/images/08/2592/20-desert-dungeon-entrance.jpg",
+    "helpText": "Navigate through the catacombs with cardinal directions, collecting ancient treasures along the way.  Commands are go [direction] or get [item].  The treasures you find will be worth gold.  Collect 100 gold and find the exit to escape.",
+    "rooms": [
+        {
+            "roomId": "chamber-4pvk1dtqyjs",
+            "roomName": "The Entrance Hall",
+            "roomDesc": "You find yourself inside a large, musty room, unable to recall how you got here.  You appear to be underground, though you are not sure how far down.  There is a small torch on the far side of the room that barely provides sufficient illumination.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/06-dragon-age-dungeon.jpg",
+            "north": "The Tomb of Mikki the Gobbo",
+            "south": "",
+            "east": "The Goblin Cloak Room",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2mz",
+                    "itemName": "The Tome Of Lowrasil",
+                    "itemDesc": "A giant book written in an unfamiliar language.",
+                    "itemValue": "10",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjt",
+            "roomName": "The Goblin Cloak Room",
+            "roomDesc": "You enter a small room lined on two sides with open closets full of empty hangers.  There is a drab brown cloak hanging all alone on a hanger in the middle of one closet.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/04-dungeon-scroller-art.jpg",
+            "north": "",
+            "south": "",
+            "east": "The Tomb of the Unknown Goblin",
+            "west": "The Entrance Hall",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyju",
+            "roomName": "The Tomb of the Unknown Goblin",
+            "roomDesc": "This room appears to be a small tomb, though there are no names or markings to be seen anywhere.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/08-iron-blade-dungeon.jpg",
+            "north": "The Hall of Cursed Mirrors",
+            "south": "",
+            "east": "",
+            "west": "The Goblin Cloak Room",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n0",
+                    "itemName": "The Gem of Sorrows",
+                    "itemDesc": "A tiny, blue gemstone that sparkles with fire, casting a troubling blue glow out into the room.",
+                    "itemValue": "25",
+                    "itemProperty": ""
+                },
+                {
+                    "itemId": "gold-4wtk1dtw2n1",
+                    "itemName": "Mordua's Crown",
+                    "itemDesc": "A silver crown fashioned of delicate vines and leaves.  The legends say that Mordua's dying words were a spell that enchanted this crown to bring its owner luck.",
+                    "itemValue": "35",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjv",
+            "roomName": "The Room of Halgar's Last Breath",
+            "roomDesc": "You enter a room whose only remarkable feature is that it seems to be squeezing the very air from your lungs.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/11-when-angels-die-dungeon.jpg",
+            "north": "Anarius the Grand's Crypt",
+            "south": "",
+            "east": "The Tomb of Mikki the Gobbo",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n2",
+                    "itemName": "The Orb of Silence",
+                    "itemDesc": "A shiny glass orb no bigger than a child's fist.  Whoever possesses this orb is unable to speak.",
+                    "itemValue": "9",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjw",
+            "roomName": "The Tomb of Mikki the Gobbo",
+            "roomDesc": "This is a modest room with a marble sarcophagus in its center.  Inscribed on the side is the name 'Mikki the Gobbo'.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/13-old-prison.jpg",
+            "north": "",
+            "south": "The Entrance Hall",
+            "east": "",
+            "west": "The Room of Halgar's Last Breath",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjx",
+            "roomName": "The Hall of Cursed Mirrors",
+            "roomDesc": "A brightly lit hallway with shattered mirrors lining the sides.  The lore of Glarven says that thieves shattered these mirrors while trying to escape from a banshee and their souls were cursed to remain in the shards for eternity.  Anyone who spies one of the thieves within is at risk of swapping places with them.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/14-gates-of-nowhere-dungeon.jpg",
+            "north": "The Pit of Eternal Moaning",
+            "south": "The Tomb of the Unknown Goblin",
+            "east": "",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjy",
+            "roomName": "Anarius the Grand's Crypt",
+            "roomDesc": "You enter a grand room with a floor that slopes gently toward the center of the western wall.  Against the wall stands a foreboding statue bearing a strange resemblance to your mother.  Behind the statue is a large marble cube with a plaque that reads 'Anarius the Grand'.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/17-dungeon-of-fire.jpg",
+            "north": "The Cavern of the Forest",
+            "south": "The Room of Halgar's Last Breath",
+            "east": "The Forbidden Lake",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n3",
+                    "itemName": "The Fist of Anarius the Grand",
+                    "itemDesc": "The petrified right hand of the largest goblin who ever lived, eternally in the shape of a fist.",
+                    "itemValue": "13",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyjz",
+            "roomName": "The Forbidden Lake",
+            "roomDesc": "Before you lies a calm lake that reflects the light of three moons, despite it being deep underground.",
+            "roomImg": "https://image.shutterstock.com/image-photo/scottish-underground-dungeon-cells-lit-260nw-1281940510.jpg",
+            "north": "Wooden Hollow",
+            "south": "",
+            "east": "The Passage of Silence",
+            "west": "Anarius the Grand's Crypt",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk0",
+            "roomName": "The Passage of Silence",
+            "roomDesc": "An eerily silent hallway stretches before you.  Your own footsteps do not make sounds in this room.  In fact you can no longer hear your breathing or the pounding of your heart.  The silence is all-consuming.",
+            "roomImg": "https://image.shutterstock.com/image-photo/castle-dungeon-beam-light-260nw-655095802.jpg",
+            "north": "",
+            "south": "",
+            "east": "The Pit of Eternal Moaning",
+            "west": "The Forbidden Lake",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n4",
+                    "itemName": "Fauntwilla's Enchanted Violin",
+                    "itemDesc": "This violin makes no sound when played.  Instead it bestows its musician with love so powerful it has been known to reduce the strongest man to tears.",
+                    "itemValue": "21",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk1",
+            "roomName": "The Pit of Eternal Moaning",
+            "roomDesc": "In the center of this room is a hole so deep that its bottom cannot be seen.  From this hole emanates a strange guttural moan that sends shivers down your spine.",
+            "roomImg": "https://image.shutterstock.com/image-photo/ancient-dark-dungeon-fog-260nw-247547329.jpg",
+            "north": "The Vault of Inegal",
+            "south": "The Hall of Cursed Mirrors",
+            "east": "",
+            "west": "The Passage of Silence",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk2",
+            "roomName": "The Cavern of the Forest",
+            "roomDesc": "You enter an area with a very low ceiling.  Dense roots hang from the dirt above, indicating you must be below the large forest outside of Glarven.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/06-dragon-age-dungeon.jpg",
+            "north": "",
+            "south": "Anarius the Grand's Crypt",
+            "east": "Wooden Hollow",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n5",
+                    "itemName": "The Mace of Respect",
+                    "itemDesc": "You need only to brandish this mace to gain the respect of any passerby.",
+                    "itemValue": "42",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk3",
+            "roomName": "Wooden Hollow",
+            "roomDesc": "You enter a place so thick with tree roots that you can barely get through.  When you manage to find a path you see that it is a room made of gnarled root walls and floors, and a low ceiling of still more roots.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/04-dungeon-scroller-art.jpg",
+            "north": "The Restless Tomb",
+            "south": "The Forbidden Lake",
+            "east": "Abandoned Glory Mausoleum",
+            "west": "The Cavern of the Forest",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n6",
+                    "itemName": "Necklace of the Void",
+                    "itemDesc": "A simple gold necklace with a stone so dark it chills your soul.",
+                    "itemValue": "18",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk4",
+            "roomName": "Abandoned Glory Mausoleum",
+            "roomDesc": "This room is lined with the graves of hundreds of goblins, except for two narrow hallways where the doors are.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/08-iron-blade-dungeon.jpg",
+            "north": "The Room of the First",
+            "south": "",
+            "east": "",
+            "west": "Wooden Hollow",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk5",
+            "roomName": "The Vault of Inegal",
+            "roomDesc": "his room is lined with the graves of hundreds of goblins, except for two narrow hallways where the doors are.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/11-when-angels-die-dungeon.jpg",
+            "north": "",
+            "south": "The Pit of Eternal Moaning",
+            "east": "",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n7",
+                    "itemName": "The Hellstaff",
+                    "itemDesc": "Crafted from demonic darkness, this Hellstaff has the power to open portals.",
+                    "itemValue": "69",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk6",
+            "roomName": "The Restless Tomb",
+            "roomDesc": "You enter a small room with three tombs.  If you listen closely you can hear a faint knocking and scratching coming from the tombs.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/13-old-prison.jpg",
+            "north": "The Obliterated Cavern",
+            "south": "Wooden Hollow",
+            "east": "The Room of the First",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2n8",
+                    "itemName": "Amulet of Horror",
+                    "itemDesc": "A simple leather cord with a blood red stone attached.  Wear at your own risk.",
+                    "itemValue": "6",
+                    "itemProperty": ""
+                },
+                {
+                    "itemId": "gold-4wtk1dtw2n9",
+                    "itemName": "Chestplate of Injuring",
+                    "itemDesc": "The wearer of this chestplate will take more damage than if they were not wearing it.",
+                    "itemValue": "0",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk7",
+            "roomName": "The Room of the First",
+            "roomDesc": "You enter a room with a small tomb in the center and several cabinets along the walls.  A nearby plaque tells the story of Faldair, the first goblin in Glarven.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/14-gates-of-nowhere-dungeon.jpg",
+            "north": "",
+            "south": "The Abandoned Glory Mausoleum",
+            "east": "",
+            "west": "The Restless Tomb",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2na",
+                    "itemName": "Faldair's Iron Razor",
+                    "itemDesc": "A small knife with an intensely sharp edge.",
+                    "itemValue": "38",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk8",
+            "roomName": "The Decayed Catacomb",
+            "roomDesc": "You enter what looks like it was once a catacomb full of goblins but all that remains is a pile of rubble and bones on the floor.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/17-dungeon-of-fire.jpg",
+            "north": "The Tomb of the Occult",
+            "south": "",
+            "east": "The Obliterated Cavern",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2nb",
+                    "itemName": "The Scroll of the Starfire Storm",
+                    "itemDesc": "A scroll of parchment with a powerful spell scrawled across it.",
+                    "itemValue": "16",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyk9",
+            "roomName": "The Obliterated Cavern",
+            "roomDesc": "You enter a cavern, or something that once was a cavern.  Giant stalagmites rise up from the ground, but most of the stalactites have fallen to the cave floor and broken into pieces.",
+            "roomImg": "https://image.shutterstock.com/image-photo/scottish-underground-dungeon-cells-lit-260nw-1281940510.jpg",
+            "north": "",
+            "south": "The Restless Tomb",
+            "east": "The Tunnel of the Renegade Goblin",
+            "west": "The Decayed Catacomb",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqyka",
+            "roomName": "The Tunnel of the Renegade Goblin",
+            "roomDesc": "This room is reported to be the escape route of a goblin who was once buried alive within this dungeon.",
+            "roomImg": "https://image.shutterstock.com/image-photo/castle-dungeon-beam-light-260nw-655095802.jpg",
+            "north": "EXIT",
+            "south": "",
+            "east": "",
+            "west": "The Obliterated Cavern",
+            "up": "",
+            "down": "",
+            "items": []
+        },
+        {
+            "roomId": "chamber-4pvk1dtqykb",
+            "roomName": "The Tomb of the Occult",
+            "roomDesc": "You enter a room with a stale smell and the distinct feeling of demonic energy.",
+            "roomImg": "https://image.shutterstock.com/image-photo/ancient-dark-dungeon-fog-260nw-247547329.jpg",
+            "north": "",
+            "south": "The Decayed Catacomb",
+            "east": "",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": [
+                {
+                    "itemId": "gold-4wtk1dtw2nc",
+                    "itemName": "Elixir of Transcendence",
+                    "itemDesc": "A small vial of a pale green translucent fluid.",
+                    "itemValue": "72",
+                    "itemProperty": ""
+                }
+            ]
+        },
+        {
+            "roomId": "chamber-4pvk1dtqykc",
+            "roomName": "EXIT",
+            "roomDesc": "You emerge from the tunnel into a small corridor with a stone staircase.  You climb the stairs, your body weary from the day's journey.  You have not been able to figure out how you came to be trapped inside the dungeon, but at least for now you once again have your freedom.",
+            "roomImg": "https://cdn.conceptartempire.com/images/08/2592/18-journeys-reward-dungeon.jpg",
+            "north": "",
+            "south": "",
+            "east": "",
+            "west": "",
+            "up": "",
+            "down": "",
+            "items": []
+        }
+    ]
+}
