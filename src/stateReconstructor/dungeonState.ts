@@ -8,6 +8,7 @@ export interface Player {
 export interface Room {
   roomName: string;
   roomDesc: string;
+  roomImg: string;
   north: string;
   south: string;
   east: string;
@@ -24,9 +25,9 @@ export interface Room {
 
 export interface DungeonJSON {
   dungeonName: string;
-	dungeonDesc: string;
-	helpText: string;
-	rooms: Array<Room>
+  dungeonDesc: string;
+  helpText: string;
+  rooms: Array<Room>
 }
 
 export type DungeonState = {
@@ -38,22 +39,23 @@ export type Direction = 'north' | 'south' | 'east' | 'west' | 'up' | 'down';
 
 export const DungeonState = (jsonObj: any): DungeonState => ({
   dungeonName: jsonObj.dungeonName,
-	dungeonDesc: jsonObj.dungeonDesc,
-	helpText: jsonObj.helpText,
+  dungeonDesc: jsonObj.dungeonDesc,
+  helpText: jsonObj.helpText,
   rooms: jsonObj.rooms.map((room: any) => ({
     roomName: room.roomName,
-		roomDesc: room.roomDesc,
-		north: room.north,
-		south: room.south,
-		east: room.east,
-		west: room.west,
-		up: room.up,
+    roomDesc: room.roomDesc,
+    roomImg: room.roomImg,
+    north: room.north,
+    south: room.south,
+    east: room.east,
+    west: room.west,
+    up: room.up,
     down: room.down,
     items: room.items.map((item: any) => ({
-			itemName: item.itemName,
-			itemDesc: item.itemDesc,
-			itemValue: parseInt(item.itemValue, 10),
-			itemProperty: item.itemProperty
+      itemName: item.itemName,
+      itemDesc: item.itemDesc,
+      itemValue: parseInt(item.itemValue, 10),
+      itemProperty: item.itemProperty
     }))
   })),
   players: [],

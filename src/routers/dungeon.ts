@@ -61,7 +61,7 @@ const move = async (ctx: Context) => {
 
   const moveEvt = Move({
     playerId: user.id,
-    direction: ctx.params.direction
+    direction: ctx.params.direction || ctx.request.body.text
   });
 
   await saveEvents(
@@ -80,7 +80,7 @@ router.get('/', async ctx => {
 router.get('/look', ...establishStateMiddlewares, look);
 router.post('/look', ...establishStateMiddlewares, look);
 
-router.post('/move/:direction', ...establishStateMiddlewares, move);
+router.post('/move', ...establishStateMiddlewares, move);
 router.get('/move/:direction', ...establishStateMiddlewares, move);
 
 //**** Slack integration - standalone mode ********************/
