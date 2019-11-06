@@ -37,11 +37,11 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
     const nextRoom: Room = R.view(lenses.room(nextRoomName), state);
 
     if (!nextRoom) {
-      return [StringResponse({response: "You can't do that. "})];
+      return [StringResponse({ response: `You can't do that: /move ${direction}` })];
     }
 
     return [SlackResponse({
-      response: JSON.stringify(roomBlocks(nextRoom.roomName, nextRoom.roomDesc))
+      response: JSON.stringify(roomBlocks(nextRoom))
     })];
   },
   'pick-up': ({itemId, playerId}) => {
