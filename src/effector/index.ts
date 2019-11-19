@@ -55,6 +55,14 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
   'drop-in': ({playerId}) => {
     const playerRoom: Room = R.view(lenses.playerRoom(playerId), state);
 
-    return [StringResponse({response: playerRoom.roomDesc})];
+    return [StringResponse({ response: playerRoom.roomDesc })];
+  },
+  'look': ({ playerId }) => {
+    const currentRoomName: string = R.view(lenses.playerRoom(playerId), state);
+    const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
+
+    return [SlackResponse({
+      response: JSON.stringify(roomBlocks(currentRoom))
+    })];
   }
 });

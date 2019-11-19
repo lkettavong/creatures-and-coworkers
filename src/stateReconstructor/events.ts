@@ -30,6 +30,12 @@ export type DropInToDungeon = {
   dungeonId: string;
 } & CommonEvent;
 
+export type Look = {
+  kind: 'look';
+} & CommonEvent;
+
+export const Look = makeFactory<Look>('look');
+
 export const DropInToDungeon = makeFactory<DropInToDungeon>('drop-in');
 
-export type DungeonEvent = Move | PickUp | Stab | DropInToDungeon;
+export type DungeonEvent = Move | PickUp | Stab | DropInToDungeon | Look;
