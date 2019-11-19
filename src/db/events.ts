@@ -65,7 +65,8 @@ export const saveEvents = (db: Knex, user_id: string, dungeon_id: string) => asy
       'drop-in': ({ dungeonId }) => [
         { name: 'dungeonId', value: `"${dungeonId}"` }
       ],
-      'look': () => []
+      'look': () => [],
+      'message': () => []
     })(evt);
 
     const trx = await db.transaction();

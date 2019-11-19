@@ -14,7 +14,7 @@ export type StringResponse = {
 export type Alert = {
   kind: 'alert';
   text: string;
-  toPlayerId: number;
+  toPlayerId: string;
 }
 
 export type SlackResponse = {
@@ -47,8 +47,8 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
   'pick-up': ({itemId, playerId}) => {
     return [StringResponse({response: 'cool shit bro'})];
   },
-  'stab': ({playerId}) => {
-    const toPlayerId = 1;
+  'stab': ({ playerId }) => {
+    const toPlayerId = "1";
 
     return [Alert({text: 'you done dead', toPlayerId})];
   },
@@ -64,5 +64,8 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
     return [SlackResponse({
       response: JSON.stringify(roomBlocks(currentRoom))
     })];
+  },
+  'message': ({ text, toPlayerId }) => {
+    return [Alert({ text, toPlayerId })];
   }
 });

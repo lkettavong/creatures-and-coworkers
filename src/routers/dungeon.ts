@@ -3,7 +3,7 @@ import * as R from 'ramda';
 
 import ForsakenGoblinTemplate from '../templates/ForsakenGoblin.json';
 import TestTower from '../templates/TestTower.json';
-import { Move, PickUp, Stab, DropInToDungeon, DungeonEvent, Look } from '../stateReconstructor/events';
+import { Move, PickUp, Stab, DropInToDungeon, DungeonEvent, Look, Message } from '../stateReconstructor/events';
 import { DungeonState } from '../stateReconstructor/dungeonState';
 import { EventEffector } from '../effector';
 import { EventActualizer } from '../actualizer';
@@ -76,6 +76,19 @@ const move = async (ctx: Context) => {
   );
 };
 
+const alert = async (ctx: Context) => {
+  const { currentDungeonState } = ctx[namespace];
+  const getEffects = EventEffector(currentDungeonState);
+  const actualize = EventActualizer(ctx)(currentDungeonState);
+  const msgEvt = Message({
+    text: "Wassup my dude?",
+    toPlayerId: ctx.request.body.text
+  });
+  await Promise.all(
+    getEffects(msgEvt).map(actualize)
+  );
+}
+
 router.get('/', async ctx => {
   ctx.body = forsakenGoblinTemple;
 });
@@ -86,6 +99,8 @@ router.post('/look', ...establishStateMiddlewares, look);
 router.post('/move', ...establishStateMiddlewares, move);
 router.get('/move/:direction', ...establishStateMiddlewares, move);
 
+router.post('/alert', ...establishStateMiddlewares, alert);
+router.get('/alert', ...establishStateMiddlewares, alert);
 //**** Slack integration - standalone mode ********************/
 router.get('/bot/:id', async (ctx: Context) => {
   // test: build game context for player

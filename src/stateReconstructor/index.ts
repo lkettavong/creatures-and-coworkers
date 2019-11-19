@@ -97,7 +97,8 @@ export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
             state
           );
     },
-    'look': ({ playerId }) => null
+    'look': ({ playerId }) => null,
+    'message': ({ text, toPlayerId }) => null
   })(evt)
 );
 
