@@ -10,50 +10,61 @@ export const roomBlocks = (nextRoom: Room) => {
   const nagivation = R.pipe(R.toPairs, R.map(R.apply(R.objOf)))(dirs);
   const { roomName, roomDesc, roomImg, items } = nextRoom;
 
-  const roomItems = ["*Pickup Loot*"];
-  for (let [index, item] of items.entries()) {
-    roomItems.push(`\n*_/pick ${++index}_* : ${item.itemName} - *${item.itemValue} x*:moneybag:`);
-  }
 
-  const roomNav = ["*Navigation*"];
-  for (let nav of nagivation) {
-    roomNav.push(`\n*_/move ${Object.keys(nav)[0]}_* : ${Object.values(nav)[0]}`);
-  }
-
-  return {
-    blocks: [
-      {
-        "type": "section",
-        "text": {
-          "type": "mrkdwn",
-          "text": `*${roomName}*\n${roomDesc}`
-        },
-        "accessory": {
-          "type": "image",
-          "image_url": `${roomImg}`,
-          "alt_text": "Dungeon"
-        }
+  let blocks = [
+    {
+      "type": "section",
+      "text": {
+        "type": "mrkdwn",
+        "text": `*${roomName}*\n${roomDesc}`
       },
-      {
-        "type": "context",
-        "elements": [
-          {
-            "type": "mrkdwn",
-            "text": roomItems.join('')
-          }
-        ]
-      },
-      {
-        "type": "context",
-        "elements": [
-          {
-            "type": "mrkdwn",
-            "text": roomNav.join('')
-          }
-        ]
+      "accessory": {
+        "type": "image",
+        "image_url": `${roomImg}`,
+        "alt_text": "Dungeon"
       }
-    ]
+    }
+  ];
+
+  if (items.length > 0) {
+    const roomItems = ["*Pickup Loot*"];
+    for (let [index, item] of items.entries()) {
+      roomItems.push(`\n*_/pick-up ${++index}_* : ${item.itemName} - *${item.itemValue} x*:moneybag:`);
+    }
+
+    const mrkdwn = {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": roomItems.join('')
+        }
+      ]
+    };
+
+    Object.assign(blocks, [...blocks, mrkdwn]);
   }
+
+  if (nagivation.length > 0) {
+    const roomNav = ["*Navigation*"];
+    for (let nav of nagivation) {
+      roomNav.push(`\n*_/move ${Object.keys(nav)[0]}_* : ${Object.values(nav)[0]}`);
+    }
+
+    const mrkdwn = {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": roomNav.join('')
+        }
+      ]
+    }
+
+    Object.assign(blocks, [...blocks, mrkdwn]);
+  }
+
+  return { blocks }
 }
 
 /*

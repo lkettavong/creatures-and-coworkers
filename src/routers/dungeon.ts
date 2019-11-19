@@ -3,7 +3,7 @@ import * as R from 'ramda';
 
 import ForsakenGoblinTemplate from '../templates/ForsakenGoblin.json';
 import TestTower from '../templates/TestTower.json';
-import { Move, PickUp, Stab, DropInToDungeon, DungeonEvent } from '../stateReconstructor/events';
+import { Move, PickUp, Stab, DropInToDungeon, DungeonEvent, Look } from '../stateReconstructor/events';
 import { DungeonState } from '../stateReconstructor/dungeonState';
 import { EventEffector } from '../effector';
 import { EventActualizer } from '../actualizer';
@@ -45,11 +45,14 @@ let testTower = DungeonState(TestTower);
 
 const look = async (ctx: Context) => {
   const { user, currentDungeonState } = ctx[namespace];
-
-  const roomName = R.view(lenses.playerRoom(user.id), currentDungeonState);
-  const room     = R.view(lenses.room(roomName), currentDungeonState);
-
-  ctx.body = room;
+  const getEffects = EventEffector(currentDungeonState);
+  const actualize = EventActualizer(ctx)(currentDungeonState);
+  const lookEvt = Look({
+    playerId: user.id
+  });
+  await Promise.all(
+    getEffects(lookEvt).map(actualize)
+  );
 };
 
 const move = async (ctx: Context) => {
@@ -85,19 +88,19 @@ router.get('/move/:direction', ...establishStateMiddlewares, move);
 
 //**** Slack integration - standalone mode ********************/
 router.get('/bot/:id', async (ctx: Context) => {
-    // test: build game context for player
-    const player: Player = mudGame.findOrAddPlayer(ctx.params.id);
-    const room: Room = mudGame.getRoomById("chamber-4pvk1dtqyk6");
-    const item1: Item = mudGame.getItemById("gold-4wtk1dtw2n8");
-    const item2: Item = mudGame.getItemById("gold-4wtk1dtw2n9");
-    mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item1.getId() });
-    mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item2.getId() });
-    ctx.body = mudGame.getGameContext(ctx.params.id)
+  // test: build game context for player
+  const player: Player = mudGame.findOrAddPlayer(ctx.params.id);
+  const room: Room = mudGame.getRoomById("chamber-4pvk1dtqyk6");
+  const item1: Item = mudGame.getItemById("gold-4wtk1dtw2n8");
+  const item2: Item = mudGame.getItemById("gold-4wtk1dtw2n9");
+  mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item1.getId() });
+  mudGame.pickupItem({ playerId: player.getId(), roomId: room.getId(), itemId: item2.getId() });
+  ctx.body = mudGame.getGameContext(ctx.params.id)
 });
 
 // POC - Slack standalone mode...not integrated with rest of repo
 router.post('/bot', async (ctx, next) => {
-  ctx.status = 200; 
+  ctx.status = 200;
   ctx.body = '';
   slackPublisher.notify(handleRequest(ctx, mudGame));
 });

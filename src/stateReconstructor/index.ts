@@ -96,7 +96,8 @@ export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
             }],
             state
           );
-    }
+    },
+    'look': ({ playerId }) => null
   })(evt)
 );
 
