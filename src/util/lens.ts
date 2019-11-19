@@ -18,3 +18,13 @@ export const lensCompose = (lens0: R.Lens, lens1?: R.Lens, lens2?: R.Lens,
   lens1 ? R.compose(lens0, lens1) :
   lens0
 ) as R.Lens;
+
+export const lensFilter = <T>(pred: (_: T) => boolean): R.Lens => R.lens<T[], T[], T[]>(
+  R.filter(pred),
+  (toSetWith: T[], arr) => {
+    let i = 0;
+    return R.map<T, T>(d => {
+      return pred(d) ? toSetWith[i++] : d;
+    })(arr);
+  }
+);
