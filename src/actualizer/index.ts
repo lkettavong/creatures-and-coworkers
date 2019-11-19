@@ -4,6 +4,7 @@ import { match } from "../stateReconstructor/unionHelpers";
 import { DungeonState } from "../stateReconstructor/dungeonState";
 import { Effect } from '../effector';
 import { Context } from 'koa';
+import rp from 'request-promise';
 
 export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<Effect, Promise<void>>({
   'string-response': async ({response}) => {
@@ -13,6 +14,26 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
   },
   'alert': async ({text, toPlayerId}) => {
     // Send a slack message to player(toPlayerId) saying `text`
+
+    // toPlayerId slash command setting unescaped format: '@laekettavong'
+    // toPlayerId slash command setting escaped format: '<@UFASC4XNX|laekettavong>' (need to parse for '@UFASC4XNX')
+    const response = {
+      channel: toPlayerId, // for direct user messaging, use userID else use channel ID from requestCtx
+      as_user: true,
+      text
+    }
+
+    await rp({
+      method: 'POST',
+      url: 'https://slack.com/api/chat.postMessage',
+      headers: {
+        'Authorization': `Bearer ${process.env.SLACK_BOT_USER_OAUTH_TOKEN}`, //defined in '.env' file
+        'Content-type': 'application/json; charset=utf-8'
+      },
+      json: true,
+      body: response
+    });
+
   },
   'slack-response': async ({response}) => {
     ctx.type = 'application/json';
