@@ -87,6 +87,21 @@ const alert = async (ctx: Context) => {
   await Promise.all(
     getEffects(msgEvt).map(actualize)
   );
+};
+
+const stab = async (ctx: Context) => {
+  const { user, currentDungeonState } = ctx[namespace];
+
+  const getEffects = EventEffector(currentDungeonState);
+  const actualize = EventActualizer(ctx)(currentDungeonState);
+
+  const msgEvt = Stab({
+    playerId: user.id
+  });
+
+  await Promise.all(
+    getEffects(msgEvt).map(actualize)
+  );
 }
 
 router.get('/', async ctx => {
@@ -101,6 +116,10 @@ router.get('/move/:direction', ...establishStateMiddlewares, move);
 
 router.post('/alert', ...establishStateMiddlewares, alert);
 router.get('/alert', ...establishStateMiddlewares, alert);
+
+router.get('/stab', ...establishStateMiddlewares, stab);
+
+
 //**** Slack integration - standalone mode ********************/
 router.get('/bot/:id', async (ctx: Context) => {
   // test: build game context for player

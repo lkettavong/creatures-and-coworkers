@@ -30,7 +30,16 @@ export class SlackSubscriber implements Subscriber {
 
     public respond(requestCtx: RequestContext): void {
         const { type } = requestCtx;
-        if (type !== RequestType.Ignore) this.handlerMap.get(type)(requestCtx);
+
+        if (type !== RequestType.Ignore) {
+          const handler = this.handlerMap.get(type);
+
+          if (!handler) {
+            throw new Error(`No handler found for type ${type}`);
+          }
+
+          handler(requestCtx);
+        }
     }
 
     private getCommonResponse = (requestCtx: RequestContext): any => {

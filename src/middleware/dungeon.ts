@@ -32,7 +32,7 @@ export const withCurrentDungeon = async (ctx: Context, next: Next) => {
           template_id: template.id
         })
         .returning('*')
-    )[0];
+    )[0] as Dungeon;
   }
   ctx[namespace] = updateCNCMiddlewareNamespace(ctx, { currentDungeon });
 
@@ -47,7 +47,7 @@ export const withCurrentDungeonTemplate = async (ctx: Context, next: Next) => {
   const [currentTemplate] = await db<Template>('templates')
     .select('*')
     .where('id', currentDungeon.template_id);
-  
+
   ctx[namespace] = updateCNCMiddlewareNamespace(ctx, { currentTemplate });
 
   await next();

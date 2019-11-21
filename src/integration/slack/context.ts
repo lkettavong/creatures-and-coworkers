@@ -155,7 +155,7 @@ const caseHandleUserMessage = (ctx: any, requestCtx: RequestContext): void => {
 
 export const handleRequest = (ctx: any, dungeonMaster: any): RequestContext => {
   const { challenge } = ctx.request.body;
-  let requestCtx: RequestContext = { ctx, dungeonMaster, type: RequestType.Ignore };
+  let requestCtx = { ctx, dungeonMaster, type: RequestType.Ignore } as RequestContext;
   caseHandleChallenge(ctx, requestCtx);
   caseHandleComponent(ctx, requestCtx);
   caseHandleUserMessage(ctx, requestCtx);

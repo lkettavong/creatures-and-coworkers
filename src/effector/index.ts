@@ -2,9 +2,10 @@ import * as R from 'ramda';
 
 import { roomBlocks } from "./slackResponse";
 import { match, makeFactory } from "../stateReconstructor/unionHelpers";
-import { Direction, DungeonState, Room } from "../stateReconstructor/dungeonState";
+import { Direction, DungeonState, Room, Player } from "../stateReconstructor/dungeonState";
 import { DungeonEvent, Move } from '../stateReconstructor/events';
 import { lenses } from '../stateReconstructor/lenses';
+import { lensFilter, lensCompose } from '../util/lens';
 
 export type StringResponse = {
   kind: 'string-response';
@@ -30,7 +31,7 @@ export const SlackResponse  = makeFactory<SlackResponse>('slack-response');
 
 export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect[]>({
   'move': ({direction, playerId}) => {
-    const currentRoomName: string = R.view(lenses.playerRoom(playerId), state);
+    const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
     const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
 
     const nextRoomName = currentRoom[direction];
@@ -48,17 +49,29 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
     return [StringResponse({response: 'cool shit bro'})];
   },
   'stab': ({ playerId }) => {
-    const toPlayerId = "1";
+    const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
 
-    return [Alert({text: 'you done dead', toPlayerId})];
+    const playersInRoom = R.view(lensCompose(
+      lenses.players(),
+      lensFilter((p: Player) => p.room === currentRoomName)
+    ), state);
+
+    console.log(state);
+
+    const toPlayerId = "U92LTTRT9";
+
+    return [
+      StringResponse({response: 'Stabbing everybody' }),
+      Alert({text: 'you done dead', toPlayerId})
+    ];
   },
   'drop-in': ({playerId}) => {
-    const playerRoom: Room = R.view(lenses.playerRoom(playerId), state);
+    const playerRoom: Room = R.view(lenses.playerRoomName(playerId), state);
 
     return [StringResponse({ response: playerRoom.roomDesc })];
   },
   'look': ({ playerId }) => {
-    const currentRoomName: string = R.view(lenses.playerRoom(playerId), state);
+    const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
     const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
 
     return [SlackResponse({
