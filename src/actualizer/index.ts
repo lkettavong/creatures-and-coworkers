@@ -5,6 +5,8 @@ import { DungeonState } from "../stateReconstructor/dungeonState";
 import { Effect } from '../effector';
 import { Context } from 'koa';
 import rp from 'request-promise';
+import { User } from '../db/users';
+import Knex from 'knex';
 
 export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<Effect, Promise<void>>({
   'string-response': async ({response}) => {
@@ -13,15 +15,18 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
       : response;
   },
   'alert': async ({text, toPlayerId}) => {
-    // Send a slack message to player(toPlayerId) saying `text`
+    const db = ctx.db as Knex;
+
+    const [user] = await db<User>('events')
+      .where({id: toPlayerId});
 
     // toPlayerId slash command setting unescaped format: '@laekettavong'
     // toPlayerId slash command setting escaped format: '<@UFASC4XNX|laekettavong>' (need to parse for '@UFASC4XNX')
     const response = {
-      channel: toPlayerId, // for direct user messaging, use userID else use channel ID from requestCtx
+      channel: user.external_id, // for direct user messaging, use userID else use channel ID from requestCtx
       as_user: true,
       text
-    }
+    };
 
     await rp({
       method: 'POST',

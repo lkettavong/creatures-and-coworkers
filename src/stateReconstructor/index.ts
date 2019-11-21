@@ -43,7 +43,7 @@ const Unable = makeFactory<Unable>('unable');
 export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
   match<DungeonEvent, DungeonState>({
     'move': ({direction, playerId}) => {
-      const currentRoomName: string = R.view(lenses.playerRoom(playerId), state);
+      const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
       const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
 
       const nextRoomName = currentRoom[direction];
@@ -54,7 +54,7 @@ export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
       }
 
       return R.set(
-        lenses.playerRoom(playerId),
+        lenses.playerRoomName(playerId),
         nextRoomName,
         state
       );
@@ -97,8 +97,8 @@ export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
             state
           );
     },
-    'look': ({ playerId }) => null,
-    'message': ({ text, toPlayerId }) => null
+    'look': ({ playerId }) => state,
+    'message': ({ text, toPlayerId }) => state
   })(evt)
 );
 

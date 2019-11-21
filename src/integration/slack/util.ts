@@ -16,7 +16,7 @@ import {
 export class StateUtil {
 
     public static getRoomDirections = (room: DungeonRoom): any => {
-        const directions: RoomDirectionState = R.pickAll(['north', 'south', 'east', 'west', 'up', 'down'])(room);
+        const directions: R.Dictionary<string> = R.pickAll(['north', 'south', 'east', 'west', 'up', 'down'])(room);
         const dirs = R.reject((n: string) => R.isEmpty(n))(directions);
         return R.pipe(R.toPairs, R.map(R.apply(R.objOf)))(dirs);
     }
@@ -97,12 +97,12 @@ export class DecoratorUtil {
 export const AiLogger = (() => {
 
     type LoggerConstructor = {
-        name: string;
+        name?: string;
         color: string;
     }
 
     type FunctionParams = {
-        header?: string;
+        header: string;
         body?: any;
         msg?: any;
         color?: string;
@@ -184,7 +184,7 @@ export const AiLogger = (() => {
             if (_toggle && isOn) _withHeader(header, body, color || _color);
         }
 
-        public static stringify = (obj: any, color: string = undefined, isOn: boolean = true): void => {
+        public static stringify = (obj: any, color?: string, isOn: boolean = true): void => {
             if (_toggle && isOn) _stringify(obj, color || _color);
         }
 
@@ -223,7 +223,7 @@ export const AiLogger = (() => {
             if (this.flick && isOn) _withHeader(header, body, color || this.color);
         }
 
-        public stringify = (obj: any, color: string = undefined, isOn: boolean = true): void => {
+        public stringify = (obj: any, color?: string, isOn: boolean = true): void => {
             if (this.flick && isOn) _stringify(obj, color || this.color);
         }
 

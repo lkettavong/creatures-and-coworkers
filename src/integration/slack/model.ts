@@ -66,7 +66,7 @@ export class Room {
   }
 
   private initDirections(room: DungeonRoomMetadata): void {
-    const directions: RoomDirectionState = R.pickAll(['north', 'south', 'east', 'west', 'up', 'down'])(room);
+    const directions: R.Dictionary<string> = R.pickAll(['north', 'south', 'east', 'west', 'up', 'down'])(room);
     const dirs = R.reject((n: string) => R.isEmpty(n))(directions);
     const dirArray = R.pipe(R.toPairs, R.map(R.apply(R.objOf)))(dirs);
     this.directions = new Map();
@@ -223,11 +223,11 @@ export class Underworld {
   }
 
   public getRoom(roomId: string): Room {
-    return this.allRooms.get(roomId);
+    return this.allRooms.get(roomId) as Room;
   }
 
-  public getRoomId(roomName: string): String {
-    let roomId;
+  public getRoomId(roomName: string): string {
+    let roomId: string = '';
     this.allRooms.forEach((key: Room, value: string) => {
       if (key.getName() == roomName) roomId = value;
     });
@@ -235,7 +235,7 @@ export class Underworld {
   }
 
   public getItem(itemId: string): Item {
-    return this.allItems.get(itemId);
+    return this.allItems.get(itemId) as Item;
   }
 
   public addPlayer(player: Player): void {
@@ -247,7 +247,7 @@ export class Underworld {
   }
 
   public getPlayer(playerId: string): Player {
-    return this.allPlayers.get(playerId);
+    return this.allPlayers.get(playerId) as Player;
   }
 
   public findOrAddPlayer(playerId: string, playerName: string): Player {
@@ -259,7 +259,7 @@ export class Underworld {
       this.allPlayers.set(playerId, player);
       return player;
     } else {
-      const player: Player = this.allPlayers.get(playerId);
+      const player: Player = this.allPlayers.get(playerId) as Player;
       if (playerName) {
         // depending on Slack event, user name is unavailable during player creation
         player.setName(playerName);

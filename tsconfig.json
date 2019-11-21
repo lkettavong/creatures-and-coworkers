@@ -5,7 +5,8 @@
     "module": "commonjs",
     "lib": ["es7"],
     "noImplicitAny": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "strictNullChecks": true
   },
   "include": [
     "src/**/*"

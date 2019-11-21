@@ -7,7 +7,7 @@ import { Next } from '../routers/util';
 export const withUser = async (ctx: Context, next: Next) => {
   const db = ctx.db as Knex;
 
-  const external_id: string = ctx.request.body.user_name || 'e144ab9a-98dd-4a27-89f0-0f9c5fafd84d';
+  const external_id: string = ctx.request.body.user_id || 'e144ab9a-98dd-4a27-89f0-0f9c5fafd84d';
 
   let [user] = await db<User>('users')
     .select('*')
@@ -23,7 +23,7 @@ export const withUser = async (ctx: Context, next: Next) => {
           external_id
         })
         .returning('*')
-    )[0];
+    )[0] as User;
   }
 
   ctx[namespace] = updateCNCMiddlewareNamespace(ctx, { user });

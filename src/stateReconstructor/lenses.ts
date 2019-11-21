@@ -1,11 +1,11 @@
 import * as R from 'ramda';
 import { lensFind, lensCompose } from '../util/lens';
 
-type LensObj = {
-  [s: string]: (...params: any[]) => R.Lens
-};
+// type LensObj = {
+//   [s: string]: (...params: any[]) => R.Lens
+// };
 
-export const lenses: LensObj = {
+export const lenses = {
   player: (playerId: string): R.Lens => lensCompose(
     lenses.players(),
     lensFind(R.whereEq({id: playerId}))
@@ -20,7 +20,7 @@ export const lenses: LensObj = {
     R.lensPath(['rooms']),
     R.lensIndex(0)
   ),
-  playerRoom: (playerId: string): R.Lens => lensCompose(
+  playerRoomName: (playerId: string): R.Lens => lensCompose(
     lenses.player(playerId),
     R.lensPath(['room'])
   ),

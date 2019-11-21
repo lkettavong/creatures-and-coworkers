@@ -3,7 +3,7 @@ import { Context } from 'koa';
 //TODO: housekeeping
 /***[ Types ]********/
 export type Dungeon = {
-    dungeonId?: string; //TODO...make quired
+    dungeonId: string; //TODO...make quired
     dungeonName: string;
     dungeonDesc: string;
     helpText: string;
@@ -12,7 +12,7 @@ export type Dungeon = {
 }
 
 export type DungeonRoomMetadata = {
-    roomId?: string; //TODO...make quired
+    roomId: string; //TODO...make quired
     roomName: string;
     roomDesc: string;
     roomImg: string;
@@ -42,7 +42,7 @@ export type RoomDirectionState = {
 export type DungeonRoomState = DungeonRoomMetadata & RoomDirectionState;
 
 export type RoomItem = {
-    itemId?: string; //TODO...make quired
+    itemId: string; //TODO...make quired
     itemName: string;
     itemDesc: string;
     itemValue: string;
@@ -60,11 +60,11 @@ export type Player = {
 export type RequestContext = {
     ctx: Context;
     dungeonMaster: any;
-    player?: Player;
+    player: Player;
     responseUrl?: string;
     timestamp?: string;
     challenge?: string;
-    type?: RequestType;
+    type: RequestType;
     channel?: string;
     team?: string
     user?: string;
