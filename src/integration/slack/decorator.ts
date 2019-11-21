@@ -236,7 +236,15 @@ export const Decorator = (() => {
 
     const _decorate = ({ response, requestCtx }: any) => {
         const { type } = requestCtx;
-        if (type !== RequestType.Ignore) return _handlerMap.get(type)({ response, requestCtx });
+        if (type !== RequestType.Ignore) {
+          const handler = _handlerMap.get(type);
+
+          if (!handler) {
+            throw new Error(`No handler found for type ${type}`);
+          }
+
+          return handler({ response, requestCtx });
+        }
     }
 
     return {
