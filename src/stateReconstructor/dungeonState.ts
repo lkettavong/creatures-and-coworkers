@@ -32,7 +32,7 @@ export interface DungeonJSON {
 
 export type DungeonState = {
   players: Player[];
-  deadPlayers: number[];
+  deadPlayers: Player[];
 } & DungeonJSON;
 
 export type Direction = 'north' | 'south' | 'east' | 'west' | 'up' | 'down';

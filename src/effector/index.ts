@@ -51,18 +51,28 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
   'stab': ({ playerId }) => {
     const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
 
-    const playersInRoom = R.view(lensCompose(
+    const playersInRoom: Player[] = R.view(lensCompose(
       lenses.players(),
       lensFilter((p: Player) => p.room === currentRoomName)
     ), state);
 
-    console.log(state);
+    const newlyDeadPlayers = playersInRoom
+      .filter(p => p.id !== playerId);
 
-    const toPlayerId = "U92LTTRT9";
+    const toPlayerId = '57536257-aabf-423b-963a-8deadcb8ea2f';
+
+    const playerIdsToAlert = newlyDeadPlayers.map(p => p.id);
+
+    const response = newlyDeadPlayers.length > 0
+      ? 'Stabbing everybody'
+      : 'Stabbing nobody';
 
     return [
-      StringResponse({response: 'Stabbing everybody' }),
-      Alert({text: 'you done dead', toPlayerId})
+      StringResponse({response}),
+      ...playerIdsToAlert.map(id => Alert({
+        text: 'you done dead',
+        toPlayerId: id
+      }))
     ];
   },
   'drop-in': ({playerId}) => {
