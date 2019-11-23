@@ -17,7 +17,7 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
   'alert': async ({text, toPlayerId}) => {
     const db = ctx.db as Knex;
 
-    const [user] = await db<User>('events')
+    const [user] = await db<User>('users')
       .where({id: toPlayerId});
 
     // toPlayerId slash command setting unescaped format: '@laekettavong'
@@ -38,7 +38,6 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
       json: true,
       body: response
     });
-
   },
   'slack-response': async ({response}) => {
     ctx.type = 'application/json';
