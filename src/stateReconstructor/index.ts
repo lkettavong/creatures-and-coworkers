@@ -6,7 +6,7 @@ import { DungeonEvent, Move, DropInToDungeon } from './events';
 import { lenses } from './lenses';
 
 import testDungeonJson from './testDungeon.json';
-import { lensCompose, lensFind } from '../util/lens';
+import { lensCompose, lensFind, lensFilter } from '../util/lens';
 const testDungeon = DungeonState(testDungeonJson);
 
 /*
@@ -67,11 +67,29 @@ export const reduceState = (state: DungeonState, evt: DungeonEvent) => (
       );
     },
     'stab': ({playerId}) => {
-      return R.over(
+      const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
+
+      const playersInRoom: Player[] = R.view(lensCompose(
+        lenses.players(),
+        lensFilter((p: Player) => p.room === currentRoomName)
+      ), state);
+
+      const newlyDeadPlayers = playersInRoom
+        .filter(p => p.id !== playerId);
+
+      const addToDeadPlayers = R.over(
         lenses.deadPlayers(),
-        (deadPlayers: number[]) => [...deadPlayers, playerId],
-        state
-      )
+        R.concat(newlyDeadPlayers)
+      );
+      const removeFromPlayers = R.over(
+        lenses.players(),
+        R.without(newlyDeadPlayers)
+      );
+
+      return R.pipe(
+        addToDeadPlayers,
+        removeFromPlayers
+      )(state);
     },
     'drop-in': ({playerId}) => {
       const player: Room = R.view(
