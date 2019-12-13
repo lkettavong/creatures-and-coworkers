@@ -1,7 +1,7 @@
 import * as R from 'ramda';
 import { Room } from "../stateReconstructor/dungeonState";
 
-export const roomBlocks = (nextRoom: Room) => {
+export const roomBlocks = (nextRoom: Room, otherPlayers: string[]) => {
 
   // brute force, make it work first
   // TODO: rework...not every room has loot to pick up
@@ -60,6 +60,25 @@ export const roomBlocks = (nextRoom: Room) => {
         }
       ]
     }
+
+    Object.assign(blocks, [...blocks, mrkdwn]);
+  }
+
+  if (otherPlayers.length > 0) {
+    const players = ["*Other players in room*"];
+    for (let id of otherPlayers) {
+      players.push(`\n*${id}*`);
+    }
+
+    const mrkdwn = {
+      "type": "context",
+      "elements": [
+        {
+          "type": "mrkdwn",
+          "text": players.join('')
+        }
+      ]
+    };
 
     Object.assign(blocks, [...blocks, mrkdwn]);
   }

@@ -83,10 +83,10 @@ const alert = async (ctx: Context) => {
 
   const getEffects = EventEffector(currentDungeonState);
   const actualize = EventActualizer(ctx)(currentDungeonState);
-
+  const msg = ctx.request.body.text.split('>>');  // expected Slack command usage: /alert @display_username >> This is the alert message 
   const msgEvt = Message({
-    text: "Wassup my dude?",
-    toPlayerId: ctx.request.body.text
+    toPlayerId: msg[0], //user.external_id // ctx.request.body.text
+    text: msg[1] //"Wassup my dude?",
   });
 
   await saveEvents(
@@ -128,8 +128,8 @@ router.post('/look', ...establishStateMiddlewares, look);
 router.post('/move', ...establishStateMiddlewares, move);
 router.get('/move/:direction', ...establishStateMiddlewares, move);
 
-router.post('/alert', ...establishStateMiddlewares, alert);
 router.get('/alert', ...establishStateMiddlewares, alert);
+router.post('/alert', ...establishStateMiddlewares, alert);
 
 router.get('/stab', ...establishStateMiddlewares, stab);
 router.post('/stab', ...establishStateMiddlewares, stab);

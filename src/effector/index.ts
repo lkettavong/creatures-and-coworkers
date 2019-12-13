@@ -41,8 +41,10 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
       return [StringResponse({ response: `You can't do that: /move ${direction}` })];
     }
 
+    const player = state.players.find((p: Player) => p.id == playerId) || { room: '' };
+    const otherPlayers = state.players.filter((p: Player) => p.id !== playerId && p.room === player.room).map((p: Player) => p.id)
     return [SlackResponse({
-      response: JSON.stringify(roomBlocks(nextRoom))
+      response: JSON.stringify(roomBlocks(nextRoom, otherPlayers))
     })];
   },
   'pick-up': ({itemId, playerId}) => {
@@ -84,8 +86,11 @@ export const EventEffector = (state: DungeonState) => match<DungeonEvent, Effect
     const currentRoomName: string = R.view(lenses.playerRoomName(playerId), state);
     const currentRoom: Room = R.view(lenses.room(currentRoomName), state);
 
+    const player = state.players.find((p: Player) => p.id == playerId) || { room: '' };
+    const otherPlayers = state.players.filter((p: Player) => p.id !== playerId && p.room === player.room).map((p: Player) => p.id)
+
     return [SlackResponse({
-      response: JSON.stringify(roomBlocks(currentRoom))
+      response: JSON.stringify(roomBlocks(currentRoom, otherPlayers))
     })];
   },
   'message': ({ text, toPlayerId }) => {

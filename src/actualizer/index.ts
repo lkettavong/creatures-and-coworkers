@@ -14,16 +14,16 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
       ? ctx.body + response
       : response;
   },
-  'alert': async ({text, toPlayerId}) => {
-    const db = ctx.db as Knex;
+  'alert': async ({ text, toPlayerId }) => {
+    // const db = ctx.db as Knex;
 
-    const [user] = await db<User>('users')
-      .where({id: toPlayerId});
+    // const [user] = await db<User>('users')
+    //   .where({ external_id: toPlayerId });
 
     // toPlayerId slash command setting unescaped format: '@laekettavong'
     // toPlayerId slash command setting escaped format: '<@UFASC4XNX|laekettavong>' (need to parse for '@UFASC4XNX')
     const response = {
-      channel: user.external_id, // for direct user messaging, use userID else use channel ID from requestCtx
+      channel: toPlayerId, //'@display_name', for direct user messaging, use userID else use channel ID from requestCtx
       as_user: true,
       text
     };
@@ -38,6 +38,8 @@ export const EventActualizer = (ctx: Context) => (state: DungeonState) => match<
       json: true,
       body: response
     });
+    ctx.status = 200;
+    ctx.body = '';
   },
   'slack-response': async ({response}) => {
     ctx.type = 'application/json';
